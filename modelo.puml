@@ -1,0 +1,62 @@
+@startuml modelo
+
+
+abstract class Animal {
+    +nombre : String
+    +edad : int
+    +hacerSonido() : void
+}
+
+class Perro {
+    +raza : String
+    +hacerSonido() : void
+}
+
+class Gato {
+    +color : String
+    +hacerSonido() : void
+}
+
+Animal <|-- Perro
+Animal <|-- Gato
+
+
+interface ICuidador {
+    +alimentar(animal: Animal) : void
+}
+
+class Veterinario implements ICuidador {
+    +especialidad : String
+    +alimentar(animal: Animal) : void
+}
+
+
+class Dueño {
+    -nombre : String
+    -direccion : String
+    +getNombre() : String
+    +setNombre(nombre: String) : void
+}
+
+
+Dueño "1" -- "0..*" Animal : cuida >
+
+
+class Refugio {
+    +nombre : String
+}
+
+Refugio o-- "0..*" Animal : alberga >
+
+
+class HistorialMedico {
+    +fecha : Date
+    +diagnostico : String
+}
+
+Animal *-- "1..*" HistorialMedico : tiene >
+
+
+Veterinario ..> HistorialMedico : revisa >
+
+@enduml
